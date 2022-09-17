@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "granular-permissions"
+version = "0.1.0"
+description = ""
+authors = ["Laxmikant Suryavanshi <laxmikantsuryavanshi@hotmail.com>"]
+readme = "README.md"
+packages = [{include = "granular_permissions"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.1.1"
+django-guardian = "^2.4.0"
+djangorestframework = "^3.13.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.8.0"
+pylint = "^2.15.2"
+pylint-django = "^2.5.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+extend-exclude = "/migrations/"
+skip-string-normalization = true
