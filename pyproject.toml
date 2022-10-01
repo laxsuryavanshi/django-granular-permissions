@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "granular-permissions"
+name = "django-granular-permissions"
 version = "0.1.0"
 description = ""
 authors = ["Laxmikant Suryavanshi <laxmikantsuryavanshi@hotmail.com>"]

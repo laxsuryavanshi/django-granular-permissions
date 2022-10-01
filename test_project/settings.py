@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'guardian',
     'granular_permissions',
+    'test_app',
 ]
 
 MIDDLEWARE = [
