@@ -5,6 +5,8 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 
+from granular_permissions.mixins import GranularPermissionMixin
+from test_app.models import *  # pylint: disable=wildcard-import,unused-wildcard-import
 from test_app.serializers import *  # pylint: disable=wildcard-import,unused-wildcard-import
 
 
@@ -15,11 +17,11 @@ class CreateAPIMixin:
         serializer.save(author=self.request.user)
 
 
-class ListRetrieveUpdateDestroyAPIMixin:
+class RetrieveUpdateDestroyAPIMixin:
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return self.serializer_class.Meta.model.objects.filter(author=self.request.user)
+        return self.model_class.objects.all()
 
 
 class PostCreateAPIView(CreateAPIMixin, CreateAPIView):
@@ -27,13 +29,14 @@ class PostCreateAPIView(CreateAPIMixin, CreateAPIView):
 
 
 class PostRetrieveUpdateDestroyAPIView(
-    ListRetrieveUpdateDestroyAPIMixin, RetrieveUpdateDestroyAPIView
+    GranularPermissionMixin, RetrieveUpdateDestroyAPIMixin, RetrieveUpdateDestroyAPIView
 ):
-    serializer_class = PostSerializer
+    model_class = Post
 
 
-class PostListAPIView(ListRetrieveUpdateDestroyAPIMixin, ListAPIView):
+class PostListAPIView(ListAPIView):
     serializer_class = PostListSerializer
+    queryset = Post.objects.all()
 
 
 class CommentCreateAPIView(CreateAPIMixin, CreateAPIView):
@@ -41,6 +44,6 @@ class CommentCreateAPIView(CreateAPIMixin, CreateAPIView):
 
 
 class CommentRetrieveUpdateDestroyAPIView(
-    ListRetrieveUpdateDestroyAPIMixin, RetrieveUpdateDestroyAPIView
+    GranularPermissionMixin, RetrieveUpdateDestroyAPIMixin, RetrieveUpdateDestroyAPIView
 ):
-    serializer_class = CommentSerializer
+    model_class = Comment
